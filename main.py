@@ -1,13 +1,19 @@
+from app.readers.pdf_reader import PDFReader
 from app.readers.text_reader import TextReader
-from app.services.job_service import JobService
+from app.utils.skill_matcher import SkillMatcher
 
-reader = TextReader()
-job_service = JobService()
+pdf = PDFReader()
+text = TextReader()
 
-job_description = reader.read(
-    "data/jobs/react_native_jd.txt"
+resume = pdf.read("data/resumes/resume.pdf")
+
+jd = text.read("data/jobs/react_native_jd.txt")
+
+matcher = SkillMatcher()
+
+result = matcher.calculate_score(
+    resume,
+    jd
 )
-
-result = job_service.analyze(job_description)
 
 print(result)
