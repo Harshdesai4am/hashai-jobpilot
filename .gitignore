@@ -4,6 +4,9 @@
 # Python Cache
 __pycache__/
 *.py[cod]
+*.pyc
+logs/
+.env
 
 # Environment Variables
 .env

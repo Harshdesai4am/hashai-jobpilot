@@ -1,19 +1,33 @@
-from app.readers.pdf_reader import PDFReader
-from app.readers.text_reader import TextReader
-from app.utils.skill_matcher import SkillMatcher
+from app.core.jobpilot import JobPilot
+from app.logger.logger import logger
 
-pdf = PDFReader()
-text = TextReader()
 
-resume = pdf.read("data/resumes/resume.pdf")
+def main():
+    logger.info("Application Started")
 
-jd = text.read("data/jobs/react_native_jd.txt")
+    try:
+        jobpilot = JobPilot()
 
-matcher = SkillMatcher()
+        result = jobpilot.match_resume(
+            "data/resumes/resume.pdf",
+            "data/jobs/react_native_jd.txt"
+        )
 
-result = matcher.calculate_score(
-    resume,
-    jd
-)
+        print("\n" + "=" * 80)
+        print("🚀 JobPilot ATS Report")
+        print("=" * 80)
+        print(result)
+        print("=" * 80)
 
-print(result)
+        logger.info("Resume Matching Completed")
+
+    except Exception as e:
+        logger.exception(f"Application Error: {e}")
+        print(f"\n❌ Error: {e}")
+
+    finally:
+        logger.info("Application Closed")
+
+
+if __name__ == "__main__":
+    main()
