@@ -1,0 +1,4 @@
+MODEL_NAME = "qwen2.5:3b"
+APP_NAME = "JobPilot"
+TEMPERATURE = 0.7
+MAX_TOKENS = 2048
