@@ -1,9 +1,13 @@
-from app.ai_client import AIClient
+from app.readers.text_reader import TextReader
+from app.services.job_service import JobService
 
-client = AIClient()
+reader = TextReader()
+job_service = JobService()
 
-response = client.ask(
-    "Introduce yourself in one sentence."
+job_description = reader.read(
+    "data/jobs/react_native_jd.txt"
 )
 
-print(response)
+result = job_service.analyze(job_description)
+
+print(result)
