@@ -1,6 +1,9 @@
+from app.prompts.system_prompt import SYSTEM_PROMPT
+
+
 def build_job_prompt(job_description: str) -> str:
     return f"""
-You are an expert Technical Recruiter.
+{SYSTEM_PROMPT}
 
 Analyze the following Job Description.
 

@@ -1,3 +1,6 @@
+from app.prompts.system_prompt import SYSTEM_PROMPT
+
+
 def build_ats_prompt(
     resume: str,
     job_description: str,
@@ -6,27 +9,32 @@ def build_ats_prompt(
     missing: list,
 ) -> str:
 
+    matched_skills = ", ".join(matched) if matched else "None"
+    missing_skills = ", ".join(missing) if missing else "None"
+
     return f"""
-You are an ATS Expert.
+{SYSTEM_PROMPT}
 
-The ATS score has already been calculated.
+The ATS score has already been calculated using a Python algorithm.
 
-Do NOT calculate another score.
+DO NOT calculate another ATS score.
 
-ATS Score:
+ATS Result
+
+Score:
 {score}
 
 Matched Skills:
-{', '.join(matched)}
+{matched_skills}
 
 Missing Skills:
-{', '.join(missing)}
+{missing_skills}
 
 Resume:
 
 {resume}
 
---------------------------------
+--------------------------------------------------
 
 Job Description:
 
@@ -34,8 +42,9 @@ Job Description:
 
 Explain:
 
-1. Why this score was achieved.
+1. Why this ATS score was achieved.
 2. Candidate strengths.
 3. Missing skills.
-4. Suggestions to improve the resume.
+4. Resume improvement suggestions.
+5. Final recommendation.
 """

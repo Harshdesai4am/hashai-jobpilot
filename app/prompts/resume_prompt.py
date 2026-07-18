@@ -1,6 +1,9 @@
+from app.prompts.system_prompt import SYSTEM_PROMPT
+
+
 def build_resume_prompt(resume: str) -> str:
     return f"""
-You are an expert Resume Reviewer.
+{SYSTEM_PROMPT}
 
 Analyze the following resume.
 

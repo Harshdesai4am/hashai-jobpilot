@@ -1,4 +1,5 @@
 from app.ai_client import AIClient
+from app.prompts.resume_prompt import build_resume_prompt
 
 
 class ResumeService:
@@ -8,21 +9,6 @@ class ResumeService:
 
     def analyze(self, resume: str):
 
-        prompt = f"""
-Analyze the following resume.
-
-Provide:
-
-1. Professional Summary
-2. Strengths
-3. Weaknesses
-4. Missing Skills
-5. ATS Score out of 100
-6. Suggestions
-
-Resume:
-
-{resume}
-"""
+        prompt = build_resume_prompt(resume)
 
         return self.ai.ask(prompt)
