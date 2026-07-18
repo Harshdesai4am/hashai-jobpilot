@@ -1,41 +1,52 @@
 from app.ai_client import AIClient
+from app.ats.extractor import SkillExtractor
+from app.ats.calculator import ATSCalculator
 
 
 class ATSService:
 
     def __init__(self):
         self.ai = AIClient()
+        self.extractor = SkillExtractor()
+        self.calculator = ATSCalculator()
 
     def compare(self, resume: str, job_description: str):
+
+        resume_skills = self.extractor.extract(resume)
+        jd_skills = self.extractor.extract(job_description)
+
+        ats_result = self.calculator.calculate(
+            resume_skills,
+            jd_skills
+        )
 
         prompt = f"""
 You are an ATS Expert.
 
-Compare the following Resume with the Job Description.
+Below is the ATS analysis already calculated by Python.
 
-Return ONLY in this format.
+Do NOT calculate another score.
 
-# Match Percentage
+ATS Score: {ats_result["score"]}
 
-# Matching Skills
+Matched Skills:
+{", ".join(ats_result["matched"])}
 
-# Missing Skills
+Missing Skills:
+{", ".join(ats_result["missing"])}
+
+Based on this analysis provide:
 
 # Strengths
 
 # Weaknesses
 
-# Final Suggestions
-
-Resume
-
-{resume}
-
-------------------------------------
-
-Job Description
-
-{job_description}
+# Suggestions
 """
 
-        return self.ai.ask(prompt)
+        ai_response = self.ai.ask(prompt)
+
+        return {
+            "ats": ats_result,
+            "analysis": ai_response
+        }
