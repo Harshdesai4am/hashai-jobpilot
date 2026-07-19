@@ -1,14 +1,14 @@
 from app.ai_client import ai_client
-from app.prompts.ats_prompt import build_ats_prompt
+from app.prompts.cover_letter_prompt import build_cover_letter_prompt
 
-class ATSService:
+class CoverLetterService:
 
-    def compare(
+    def generate(
         self,
         resume: str,
         job_description: str,
     ) -> str:
-        prompt = build_ats_prompt(
+        prompt = build_cover_letter_prompt(
             resume,
             job_description,
         )

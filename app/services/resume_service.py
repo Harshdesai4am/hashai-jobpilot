@@ -1,28 +1,8 @@
-from app.ai_client import AIClient
-
+from app.ai_client import ai_client
+from app.prompts.resume_prompt import build_resume_prompt
 
 class ResumeService:
 
-    def __init__(self):
-        self.ai = AIClient()
-
-    def analyze(self, resume: str):
-
-        prompt = f"""
-Analyze the following resume.
-
-Provide:
-
-1. Professional Summary
-2. Strengths
-3. Weaknesses
-4. Missing Skills
-5. ATS Score out of 100
-6. Suggestions
-
-Resume:
-
-{resume}
-"""
-
-        return self.ai.ask(prompt)
+    def analyze(self, resume: str) -> str:
+        prompt = build_resume_prompt(resume)
+        return ai_client.ask(prompt)

@@ -13,3 +13,7 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger("JobPilot")
+
+
+def get_logger():
+    return logger
